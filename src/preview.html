@@ -8,12 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="robots" content="nofollow, noindex, noarchive">
     <meta name="creator" content="https://github.com/sunghwan2789/osu-preview">
-    <title>jmir.xyz - osu!preview</title>
+    <title>beatmapset.now.sh</title>
     <!-- <meta name="mobile-web-app-capable" content="yes"> -->
-    <link rel="icon" sizes="any" href="/icon.svg">
-    <link rel="icon" sizes="192x192" href="/icon.png">
-    <!-- <meta name="apple-mobile-web-app-capable" content="yes"> -->
-    <link rel="apple-touch-icon" sizes="128x128" href="/apple-touch-icon.png">
+    <link rel="icon" sizes="any" href="https://cdn.discordapp.com/emojis/705002474838163467.png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <!-- build:inlinecss -->
     <link rel="stylesheet" href="css/style.css">
@@ -54,7 +51,7 @@
     </div>
     <div id="title">
         <!--
-         --><img src="/_data/BloodCat.svg" width="20" height="30" alt="아까네코 종이모형">
+         --><img src="https://cdn.discordapp.com/emojis/705002474838163467.png" width="30" height="30" alt="Nyan">
         <!--
          --><a href="//osu.ppy.sh/b/" target="_blank">-</a>
         <!--
@@ -64,7 +61,7 @@
     <!--
     <div id="sharePrompt"></div>
  -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
     <!-- build:inlinejs -->
     <!-- <script src="../node_modules/jquery/dist/jquery.min.js"></script> -->
     <script src="js/util.js"></script>
@@ -118,10 +115,10 @@
             var osufiledata;
             !async function () {
                 var self = this;
-                let data = await fetch("https://hentai.ninja/api/b/" + beatmapID)
+                let data = await fetch("https://api.chimu.moe/v1/map/" + beatmapID)
                     .then((response) => response.json())
                     .then(data => {
-                        setID = data.ParentSetID;
+                        setID = data.data.ParentSetId;
                         var audiofile = 'https://dl.sayobot.cn/beatmaps/files/' + setID + '/';
                         var bgURL = 'https://dl.sayobot.cn/beatmaps/files/' + setID + '/';
                         var osuURL = 'https://dl.sayobot.cn/beatmaps/files/' + setID + '/';
@@ -159,7 +156,7 @@
                         };
                         sayobotcall.open("GET", "https://dl.sayobot.cn/beatmaps/info/" + setID + "/", true)
                         sayobotcall.send();
-                        return data.ParentSetID;
+                        return data.data.ParentSetId;
                     }).catch(error => {
                         console.error(error);
                     });
