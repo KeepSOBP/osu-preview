@@ -1,69 +1,40 @@
 <!DOCTYPE html>
-<html>
-
+<html prefix="og: https://ogp.me/ns#">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self' https: blob: data:; img-src 'self' https: data: blob:; style-src 'self' http://* 'unsafe-inline'; script-src 'self' * 'unsafe-inline' 'unsafe-eval' " />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="robots" content="nofollow, noindex, noarchive">
+    <meta property="og:title" content="osu!preview - more stable">
+    <meta property="og:description" content="hosted with ❤ by vercel">
+    <meta property="og:image" content="https://cdn.discordapp.com/emojis/705002474838163467.png" />
     <meta name="creator" content="https://github.com/sunghwan2789/osu-preview">
     <title>beatmapset.now.sh</title>
-    <!-- <meta name="mobile-web-app-capable" content="yes"> -->
     <link rel="icon" sizes="any" href="https://cdn.discordapp.com/emojis/705002474838163467.png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <!-- build:inlinecss -->
     <link rel="stylesheet" href="css/style.css">
-    <!-- endbuild -->
-
+</head>
 <body class="h">
     <div id="container" class="x-viewbox"></div>
     <button id="play" class="material-icons">&#xE037;</button>
     <div id="speed">
-        <!--
-         --><button value="1.5">DT</button>
-        <!--
-         --><button class="e" value="1">-</button>
-        <!--
-         --><button value="0.75">HT</button>
-        <!--
-     -->
+        <button value="1.5">DT</button>
+        <button class="e" value="1">-</button>
+        <button value="0.75">HT</button>
     </div>
     <div id="mania">
-        <!--
-         --><button value="1">+</button>
-        <!--
-         --><button id="scroll">20</button>
-        <!--
-         --><button value="-1">-</button>
-        <!--
-     -->
+        <button value="1">+</button>
+        <button id="scroll">20</button>
+        <button value="-1">-</button>
     </div>
     <div id="control">
-        <!--
-         --><input id="progress" type="range" min="0" max="0" value="0">
-        <!--
-         --><input id="volume" type="range" min="0" max="100" value="100">
-        <!--
-         --><button id="fullscreen" class="material-icons">&#xE5D0;</button>
-        <!--
-     -->
+        <input id="progress" type="range" min="0" max="0" value="0">
+        <input id="volume" type="range" min="0" max="100" value="100">
+        <button id="fullscreen" class="material-icons">&#xE5D0;</button>
     </div>
     <div id="title">
-        <!--
-         --><img src="https://cdn.discordapp.com/emojis/705002474838163467.png" width="30" height="30" alt="Nyan">
-        <!--
-         --><a href="//osu.ppy.sh/b/" target="_blank">-</a>
-        <!--
-         <button id="share" class="material-icons">&#xE80D;</button>
-     -->
+        <a id="beatmapdl" href="//dl.sayobot.cn/beatmaps/download/full/" target="_blank"><img src="https://cdn.discordapp.com/emojis/705002474838163467.png" width="30" height="30" alt="Nyan"></a>
+        <a id="beatmapinfo" h href="//osu.ppy.sh/b/" target="_blank">-</a>
     </div>
-    <!--
-    <div id="sharePrompt"></div>
- -->
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-    <!-- build:inlinejs -->
-    <!-- <script src="../node_modules/jquery/dist/jquery.min.js"></script> -->
     <script src="js/util.js"></script>
 
     <script src="js/beatmap/beatmap.js"></script>
@@ -96,7 +67,6 @@
 
     <script src="js/preview.js"></script>
     <script src="js/viewbox.js"></script>
-    <!-- endbuild -->
     <script>
 
         var preview = new Preview($('#container')[0]);
@@ -126,11 +96,6 @@
                         sayobotcall.onreadystatechange = function () {
                             if (this.readyState == 4 && this.status == 200) {
                                 sayobotdata = JSON.parse(sayobotcall.responseText);
-                                if (sayobotdata.data.length == 1) {
-                                    audiofile += sayobotdata.data[0].audio;
-                                    bgURL += sayobotdata.data[0].BG;
-                                    osuURL += sayobotdata.data[0].file_name;
-                                }
                                 for (map in sayobotdata.data) {
                                     if (sayobotdata.data[map].beatmapID == beatmapID) {
                                         audiofile += sayobotdata.data[map].audio;
@@ -141,8 +106,9 @@
                                 }
                                 preview.load(beatmapID, bgURL, osuURL, function () {
                                     audio.src = audiofile;
-                                    $('#title a').prop('href', '//osu.ppy.sh/b/' + beatmapID)
+                                    $('#beatmapinfo').prop('href', '//osu.ppy.sh/b/' + beatmapID)
                                         .text(this.beatmap.toString());
+                                    $('#beatmapdl').prop('href', '//dl.sayobot.cn/beatmaps/download/full/' + setID)
                                     if (self.beatmap instanceof Mania) {
                                         $('#mania').addClass('e');
                                         $('#scroll').text(self.beatmap.scrollSpeed);
@@ -158,6 +124,7 @@
                         sayobotcall.send();
                         return data.data.ParentSetId;
                     }).catch(error => {
+                        alert(error);
                         console.error(error);
                     });
             }();

@@ -91,7 +91,6 @@ body.h #speed, body.h #control, body.h #title, body.h #mania.e {
     #volume {
         width: 100px;
     }
-
 #title {
     top: 0;
     left: 0;
@@ -119,6 +118,8 @@ body.h #speed, body.h #control, body.h #title, body.h #mania.e {
         top: 0;
         right: 0;
     }
+    #beatmapdl
+    #beatmapinfo
 
 #sharePrompt {
     top: 50%;
